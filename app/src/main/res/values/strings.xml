@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">WhoIsMillionaireApplication</string>
+    <string name="title">WHO IS MILLIONAIRE</string>
+    <string name="start">START</string>
+    <string name="score">HIGH SCORE</string>
+    <string name="money">150.000</string>
+    <string name="answerA">A. %1$s</string>
+    <string name="answerB">B. %1$s</string>
+    <string name="answerC">C. %1$s</string>
+    <string name="answerD">D. %1$s</string>
+    <string name="result">Đạt phần thưởng của level %1$d</string>
+    <string name="question">Question: %1$d</string>
+    <string name="callMom">Bạn gọi mẹ mình và mẹ bạn bảo bạn chọn đáp án %1$c.\nNên nhớ mẹ bạn luôn đúng!</string>
+    <string name="audienceChoose">Khán giả chọn:\nA. %1$d \nB. %2$d \nC. %3$d \nD. %4$d </string>
+    <string name="confirm">Confirm</string>
+    <string name="reach15">\nOke bạn là nhất, được chưa</string>
+    <string name="reach10">\nBạn có một kĩ năng google thật là điêu luyện</string>
+    <string name="reach5">\nChúc mừng bạn đã đạt được mức mà ai cũng đạt được</string>
+    <string name="reach0">\nWow bạn quả là một thằng thua cuộc</string>
+    <string name="resign">\nDừng lại là một điều tốt khi bạn biết khả năng của mình chỉ đến thế</string>
+    <string name="timeOut">\nGì vậy bro, nghĩ đồng hồ sẽ chạy xuống số âm ak</string>
+    <string name="credit">Made by: Hoang River\nDatabase: Duy Nguyen</string>
+</resources>
