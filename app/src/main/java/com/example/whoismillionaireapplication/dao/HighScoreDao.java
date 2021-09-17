@@ -12,6 +12,9 @@ import java.util.List;
 
 @Dao
 public interface HighScoreDao {
+    @Query("select * from HighScore")
+    List<HighScore> getAll();
+
     @Insert
     void create(HighScore highScore);
 

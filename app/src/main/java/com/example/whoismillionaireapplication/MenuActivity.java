@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import android.widget.Toast;
 
+import com.example.whoismillionaireapplication.fragment.HighScoreFragment;
+
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnStart, btnScore;
     ImageView imgLogo;
@@ -53,8 +55,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.btn_start) {
             startActivity(new Intent(MenuActivity.this, MainActivity.class));
             overridePendingTransition(0, 0);
-        } else if (id == R.id.btn_score)
-            Toast.makeText(this, "Chờ cập nhật nha :(", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.btn_score) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fc_score, HighScoreFragment.class, null).addToBackStack(null).commit();
+            btnScore.setVisibility(View.GONE);
+            btnStart.setVisibility(View.GONE);
+            btnScore.startAnimation(reverseTransitionInAndAppearAnim);
+            btnStart.startAnimation(reverseTransitionInAndAppearAnim);
+        }
 
     }
 
@@ -70,5 +77,14 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         btnScore.startAnimation(reverseTransitionInAndAppearAnim);
         btnStart.startAnimation(reverseTransitionInAndAppearAnim);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        btnScore.setVisibility(View.VISIBLE);
+        btnStart.setVisibility(View.VISIBLE);
+        btnScore.startAnimation(transitionInAndAppearAnim);
+        btnStart.startAnimation(transitionInAndAppearAnim);
     }
 }

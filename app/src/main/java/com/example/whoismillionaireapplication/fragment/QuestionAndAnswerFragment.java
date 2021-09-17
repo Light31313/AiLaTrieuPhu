@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,22 +22,26 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.whoismillionaireapplication.FragmentViewModel;
 import com.example.whoismillionaireapplication.MainViewModel;
 import com.example.whoismillionaireapplication.R;
+import com.example.whoismillionaireapplication.dao.HighScoreDao;
 import com.example.whoismillionaireapplication.dao.QuestionAndAnswerDao;
+import com.example.whoismillionaireapplication.entity.HighScore;
 import com.example.whoismillionaireapplication.entity.QuestionAndAnswer;
 import com.example.whoismillionaireapplication.utils.AppDatabase;
+import com.example.whoismillionaireapplication.utils.ScoreDatabase;
 
 import java.util.List;
 import java.util.Random;
 
 public class QuestionAndAnswerFragment extends Fragment implements View.OnClickListener {
     private QuestionAndAnswerDao questionAndAnswerDao;
+    private HighScoreDao highScoreDao;
     private QuestionAndAnswer questionAndAnswer;
     private TextView txtQuestion;
     private TextView[] txtAnswers;
     private TextView txtTime, txtLevel;
     private TextView txtResult;
     private ConstraintLayout clQuestionAndAnswer;
-    private int level;
+    private int level, penaltyLevel;
     private int time, countDown;
     private FragmentViewModel fragmentViewModel;
     private CountDownTimer timer, delay2sAndMakeNewLevel;
@@ -47,6 +52,7 @@ public class QuestionAndAnswerFragment extends Fragment implements View.OnClickL
     private Random random;
     private AnimationDrawable blinkAnim;
     private TextView txtChosenAnswer;
+    private boolean isClickStop;
 
     @Nullable
     @Override
@@ -78,7 +84,7 @@ public class QuestionAndAnswerFragment extends Fragment implements View.OnClickL
         transitionUpAnim = AnimationUtils.loadAnimation(getContext(), R.anim.transion_up);
         transitionDownAnim = AnimationUtils.loadAnimation(getContext(), R.anim.transition_down);
         questionAndAnswerDao = AppDatabase.getInstance(getContext()).questionAndAnswerDao();
-
+        highScoreDao = ScoreDatabase.getInstance(getContext()).highScoreDao();
         random = new Random();
         level = 1;
         time = 60;
@@ -98,7 +104,6 @@ public class QuestionAndAnswerFragment extends Fragment implements View.OnClickL
 
             @Override
             public void onFinish() {
-                int penaltyLevel;
                 if (level - 1 == 15) {
                     penaltyLevel = 15;
                 } else if (level - 1 >= 10) {
@@ -158,6 +163,7 @@ public class QuestionAndAnswerFragment extends Fragment implements View.OnClickL
         mainViewModel.getStopEvent().observe(getViewLifecycleOwner(), isStop -> {
             if (isStop) {
                 timer.cancel();
+                isClickStop = true;
                 String textResult = getString(R.string.result, level - 1);
                 txtResult.setText(textResult);
                 txtResult.append(getString(R.string.resign));
@@ -204,6 +210,8 @@ public class QuestionAndAnswerFragment extends Fragment implements View.OnClickL
         gameOverDialog.setCanceledOnTouchOutside(false);
         AppCompatButton btnReplay = gameOverDialog.findViewById(R.id.btn_replay);
         AppCompatButton btnBack = gameOverDialog.findViewById(R.id.btn_back);
+        AppCompatButton btnSaveData = gameOverDialog.findViewById(R.id.btn_save_data);
+        EditText edtEnterName = gameOverDialog.findViewById(R.id.edt_enter_name);
         txtResult = gameOverDialog.findViewById(R.id.txt_result);
         btnReplay.setOnClickListener(view -> {
             getParentFragmentManager().beginTransaction().remove(QuestionAndAnswerFragment.this).commit();
@@ -213,6 +221,15 @@ public class QuestionAndAnswerFragment extends Fragment implements View.OnClickL
         btnBack.setOnClickListener(view -> {
             gameOverDialog.dismiss();
             getActivity().finish();
+        });
+        btnSaveData.setOnClickListener(view -> {
+            if (isClickStop) {
+                highScoreDao.create(new HighScore(edtEnterName.getText().toString().trim(), level - 1));
+            } else
+                highScoreDao.create(new HighScore(edtEnterName.getText().toString().trim(), penaltyLevel));
+            btnSaveData.setText("");
+            btnSaveData.setBackgroundResource(R.drawable.ic_baseline_check_24);
+            btnSaveData.setEnabled(false);
         });
     }
 
@@ -260,7 +277,6 @@ public class QuestionAndAnswerFragment extends Fragment implements View.OnClickL
         countDown = time;
         timer.start();
     }
-
 
 
     private void enableAllClickListener(boolean enable) {

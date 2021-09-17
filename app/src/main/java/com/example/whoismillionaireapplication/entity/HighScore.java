@@ -4,12 +4,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.whoismillionaireapplication.dao.HighScoreDao;
+
 import java.io.Serializable;
 
 @Entity(
         tableName = "HighScore"
 )
-public class HighScore implements Serializable {
+public class HighScore implements Serializable, Comparable<HighScore> {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     int id;
@@ -19,6 +21,11 @@ public class HighScore implements Serializable {
     int score;
 
     public HighScore() {
+    }
+
+    public HighScore(String name, int score) {
+        this.name = name;
+        this.score = score;
     }
 
     public int getId() {
@@ -43,5 +50,14 @@ public class HighScore implements Serializable {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    @Override
+    public int compareTo(HighScore highScore) {
+        if (score == highScore.score)
+            return 0;
+        else if (score < highScore.score)
+            return 1;
+        return -1;
     }
 }

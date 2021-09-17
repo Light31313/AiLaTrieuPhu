@@ -11,21 +11,9 @@ import com.example.whoismillionaireapplication.dao.QuestionAndAnswerDao;
 import com.example.whoismillionaireapplication.entity.HighScore;
 import com.example.whoismillionaireapplication.entity.QuestionAndAnswer;
 
-@Database(entities = {QuestionAndAnswer.class, HighScore.class}, version = 1)
+@Database(entities = {QuestionAndAnswer.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase appDatabase;
-
-    /*public static AppDatabase getInstance(Context context) {
-        if (appDatabase == null) {
-            appDatabase = Room.databaseBuilder(
-                    context.getApplicationContext(),
-                    AppDatabase.class,
-                    "WhoIsMillionaire.db")
-                    .allowMainThreadQueries().build();
-        }
-        return appDatabase;
-    }*/
-
 
     public static AppDatabase getInstance(Context context) {
         if (appDatabase == null) {
@@ -41,5 +29,5 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract QuestionAndAnswerDao questionAndAnswerDao();
-    public abstract HighScoreDao highScoreDao();
+
 }

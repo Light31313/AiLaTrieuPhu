@@ -20,4 +20,7 @@
     <string name="resign">\nDừng lại là một điều tốt khi bạn biết khả năng của mình chỉ đến thế</string>
     <string name="timeOut">\nGì vậy bro, nghĩ đồng hồ sẽ chạy xuống số âm ak</string>
     <string name="credit">Made by: Hoang River\nDatabase: Duy Nguyen</string>
+    <string name="enterName">Nhập tên</string>
+    <string name="saveData">Lưu điểm</string>
+    <string name="userScore">%1$s, Score: %2$d</string>
 </resources>
