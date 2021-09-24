@@ -1,2 +1,2 @@
 # AiLaTrieuPhu
-Game ai là triệu phú vip pro
+Game ai là triệu phú.
