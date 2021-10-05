@@ -1,2 +1,3 @@
 # AiLaTrieuPhu
-Game ai là triệu phú.
+Source code in master
+
